@@ -1,8 +1,7 @@
 import React from "react";
-import pf from "petfinder-client";
+import { render } from "react-dom";
 import Pet from "./Pet";
-import SearchBox from "./SearchBox";
-import { Consumer } from "./SearchContext";
+import pf from "petfinder-client";
 
 const petfinder = pf({
   key: process.env.API_KEY,
@@ -12,24 +11,15 @@ const petfinder = pf({
 class Results extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       pets: []
     };
   }
   componentDidMount() {
-    this.search();
-  }
-  search = () => {
+    let pets;
     petfinder.pet
-      .find({
-        location: this.props.searchParams.location,
-        animal: this.props.searchParams.animal,
-        breed: this.props.searchParams.breed,
-        output: "full"
-      })
+      .find({ output: "full", location: "Seattle, WA" })
       .then(data => {
-        let pets;
         if (data.petfinder.pets && data.petfinder.pets.pet) {
           if (Array.isArray(data.petfinder.pets.pet)) {
             pets = data.petfinder.pets.pet;
@@ -39,43 +29,23 @@ class Results extends React.Component {
         } else {
           pets = [];
         }
-        this.setState({
-          pets: pets
-        });
       });
-  };
+
+    this.setState({ pets });
+  }
+  handleClick() {
+    alert(`i'm clicked!`);
+  }
   render() {
     return (
-      <div className="search">
-        <SearchBox search={this.search} />
-        {this.state.pets.map(pet => {
-          let breed;
-          if (Array.isArray(pet.breeds.breed)) {
-            breed = pet.breeds.breed.join(", ");
-          } else {
-            breed = pet.breeds.breed;
-          }
-          return (
-            <Pet
-              animal={pet.animal}
-              key={pet.id}
-              name={pet.name}
-              breed={breed}
-              media={pet.media}
-              location={`${pet.contact.city}, ${pet.contact.state}`}
-              id={pet.id}
-            />
-          );
-        })}
+      <div>
+        <Pet name="nelly" animal="cat" breed="birman" />
+        <Pet name="gilbert" animal="cat" breed="bengal" />
+        <Pet name="nala" animal="cat" breed="norwegian forest" />
+        <button onClick={this.handleClick}>Click me!</button>
       </div>
     );
   }
 }
 
-export default function ResultsWithContext(props) {
-  return (
-    <Consumer>
-      {context => <Results {...props} searchParams={context} />}
-    </Consumer>
-  );
-}
+export default Results;

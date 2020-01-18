@@ -6,7 +6,7 @@
   "scripts": {
     "test": "",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
-    "lint": "eslint \"src/**/*.{js,jsx}\" --quiet",
+    "lint": "eslint \"src/**/*.{js,jsx}\"",
     "dev": "parcel src/index.html"
   },
   "repository": {
@@ -20,6 +20,11 @@
   },
   "homepage": "https://github.com/btholt/complete-intro-to-react-v4#readme",
   "devDependencies": {
+    "@babel/core": "^7.8.3",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-transform-runtime": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "@babel/preset-react": "^7.8.3",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.6",
     "babel-plugin-transform-class-properties": "^6.24.1",
@@ -30,11 +35,12 @@
     "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.10.0",
-    "parcel-bundler": "^1.11.0",
+    "parcel-bundler": "^1.12.4",
     "prettier": "^1.14.2"
   },
   "dependencies": {
     "@reach/router": "^1.2.1",
+    "babel-polyfill": "^6.26.0",
     "petfinder-client": "^1.0.2",
     "react": "^16.4.2",
     "react-dom": "^16.4.2"
